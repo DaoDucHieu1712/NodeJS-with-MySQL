@@ -1,9 +1,10 @@
 const express = require("express");
 const cors = require("cors");
+const morgan = require("morgan");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
-
-dotenv.config();
+const connectDB = require("./config/DBContext");
+const initRoutes = require("./routes/index");
 
 dotenv.config();
 const app = express();
@@ -14,6 +15,9 @@ app.use(cors());
 app.use(morgan("common"));
 app.use(cookieParser());
 
+connectDB();
+initRoutes(app);
+
 app.listen(PORT, () => {
-  console.log("server is running on port");
+  console.log(`server is running on port ${PORT}`);
 });
